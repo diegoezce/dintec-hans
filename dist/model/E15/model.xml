@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="GBK"?>
+
+-<config>
+
+<modelfile texture="0" file="E15-BASE.STL" part="2"/>
+
+<modelfile texture="1" file="E15_MODULE_40.STL" part="3"/>
+
+<modelfile texture="2" file="E15_MK2_DOWN.STL" part="3"/>
+
+<modelfile texture="3" file="E15_MODULE_25.STL" part="3"/>
+
+<modelfile texture="4" file="E15_MK2_UP.STL" part="3"/>
+
+<modelfile texture="5" file="E15_MODULE_17.STL" part="3"/>
+
+<modelfile texture="6" file="E15_IO.STL" part="2"/>
+
+<joint rotateAxis="0, 1, 0" rotatePoint="0, 80, 0"/>
+
+<joint rotateAxis="0,0,-1" rotatePoint="0, 262, 0"/>
+
+<joint rotateAxis="0,0,1" rotatePoint="0, 992, 0"/>
+
+<joint rotateAxis="0,1,0" rotatePoint="0, 1139, 0"/>
+
+<joint rotateAxis="0,0,1" rotatePoint="0, 1562, 0"/>
+
+<joint rotateAxis="0,1,0" rotatePoint="0, 1673, 0"/>
+
+<axisfile file="Axis.STL"/>
+
+</config>

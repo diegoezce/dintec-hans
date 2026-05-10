@@ -1,0 +1,1 @@
+var e={encode:function(e){var n="";for(var o in e)e.hasOwnProperty(o)&&(n.length&&(n+="&"),n+=encodeURIComponent(o)+"="+encodeURIComponent(e[o]));return n},decode:function(e){for(var n={},o=e.split("&"),r=0,t=o.length;r<t;r++){var d=o[r].split("=");n[decodeURIComponent(d[0])]=decodeURIComponent(d[1])}return n}};export{e as p};

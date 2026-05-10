@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="#" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"
+    />
+    <title></title>
+    <style>
+      #error-message {
+        display: none;
+        text-align: center;
+      }
+
+      .error-message-tips {
+        margin-top: 20px;
+      }
+
+      .error-message-content {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+      }
+
+      .error-message-btn {
+        width: 100px;
+        height: 40px;
+        margin-top: 20px;
+        color: #3790fc;
+        text-align: center;
+        background: #fff;
+        border: 2px solid #3790fc;
+        border-radius: 5px;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-bac3c45d.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/@vue-79be392d.js">
+    <link rel="modulepreload" crossorigin href="./assets/vuex-4edf2e50.js">
+    <link rel="modulepreload" crossorigin href="./assets/vue-router-1381afc3.js">
+    <link rel="modulepreload" crossorigin href="./assets/@intlify-e9b9bca0.js">
+    <link rel="modulepreload" crossorigin href="./assets/vue-i18n-ab1a18db.js">
+    <link rel="modulepreload" crossorigin href="./assets/axios-80bea84a.js">
+    <link rel="modulepreload" crossorigin href="./assets/has-symbols-456daba2.js">
+    <link rel="modulepreload" crossorigin href="./assets/has-proto-4a87f140.js">
+    <link rel="modulepreload" crossorigin href="./assets/function-bind-72d06d3b.js">
+    <link rel="modulepreload" crossorigin href="./assets/has-885c3436.js">
+    <link rel="modulepreload" crossorigin href="./assets/get-intrinsic-bac01933.js">
+    <link rel="modulepreload" crossorigin href="./assets/call-bind-fae29077.js">
+    <link rel="modulepreload" crossorigin href="./assets/has-cors-49d61a38.js">
+    <link rel="modulepreload" crossorigin href="./assets/isarray-36780bee.js">
+    <link rel="modulepreload" crossorigin href="./assets/has-binary2-39c6b462.js">
+    <link rel="modulepreload" crossorigin href="./assets/arraybuffer.slice-670416f2.js">
+    <link rel="modulepreload" crossorigin href="./assets/after-012ac980.js">
+    <link rel="modulepreload" crossorigin href="./assets/base64-arraybuffer-3597e296.js">
+    <link rel="modulepreload" crossorigin href="./assets/blob-87bed8eb.js">
+    <link rel="modulepreload" crossorigin href="./assets/engine.io-parser-ce11afa4.js">
+    <link rel="modulepreload" crossorigin href="./assets/component-emitter-bb297dc3.js">
+    <link rel="modulepreload" crossorigin href="./assets/parseqs-65166ff2.js">
+    <link rel="modulepreload" crossorigin href="./assets/component-inherit-73525982.js">
+    <link rel="modulepreload" crossorigin href="./assets/yeast-b09d3b1f.js">
+    <link rel="modulepreload" crossorigin href="./assets/ace-builds-5f394066.js">
+    <link rel="modulepreload" crossorigin href="./assets/indexof-1d827dab.js">
+    <link rel="modulepreload" crossorigin href="./assets/parseuri-70deaa43.js">
+    <link rel="modulepreload" crossorigin href="./assets/engine.io-client-878c7a98.js">
+    <link rel="modulepreload" crossorigin href="./assets/object-inspect-7fcf88cc.js">
+    <link rel="modulepreload" crossorigin href="./assets/side-channel-5dc13d57.js">
+    <link rel="modulepreload" crossorigin href="./assets/qs-7ccc6daf.js">
+    <link rel="modulepreload" crossorigin href="./assets/lodash-es-0028b47d.js">
+    <link rel="modulepreload" crossorigin href="./assets/@vueuse-682a0d64.js">
+    <link rel="modulepreload" crossorigin href="./assets/@element-plus-add019cc.js">
+    <link rel="modulepreload" crossorigin href="./assets/@popperjs-b78c3215.js">
+    <link rel="modulepreload" crossorigin href="./assets/@ctrl-91de2ec7.js">
+    <link rel="modulepreload" crossorigin href="./assets/dayjs-11632fdd.js">
+    <link rel="modulepreload" crossorigin href="./assets/async-validator-cf877c1f.js">
+    <link rel="modulepreload" crossorigin href="./assets/memoize-one-63ab667a.js">
+    <link rel="modulepreload" crossorigin href="./assets/normalize-wheel-es-3222b0a2.js">
+    <link rel="modulepreload" crossorigin href="./assets/@floating-ui-17b7a825.js">
+    <link rel="modulepreload" crossorigin href="./assets/element-plus-170e1cde.js">
+    <link rel="modulepreload" crossorigin href="./assets/mitt-f0e54764.js">
+    <link rel="modulepreload" crossorigin href="./assets/socket.io-parser-6aaf52dc.js">
+    <link rel="modulepreload" crossorigin href="./assets/to-array-1c79747a.js">
+    <link rel="modulepreload" crossorigin href="./assets/component-bind-64546b34.js">
+    <link rel="modulepreload" crossorigin href="./assets/backo2-8b87ba79.js">
+    <link rel="modulepreload" crossorigin href="./assets/socket.io-client-9183d4c9.js">
+    <link rel="modulepreload" crossorigin href="./assets/lodash-f9442f74.js">
+    <link rel="modulepreload" crossorigin href="./assets/vue-8e9fc292.js">
+    <link rel="stylesheet" href="./assets/element-plus-f6a4ff03.css">
+    <link rel="stylesheet" href="./assets/index-7a74674e.css">
+    <link rel="stylesheet" href="./assets/normalize-6f917b43.css">
+    <script type="module">import.meta.url;import("_").catch(()=>1);async function* g(){};if(location.protocol!="file:"){window.__vite_is_modern_browser=true}</script>
+    <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="error-message">
+        <div class="error-message-content">
+          <img src="./assets/default-88a2a965.svg" alt="error" />
+          <p class="error-message-tips">Network unstable, please refresh.</p>
+          <button onclick="window.location.reload();" class="error-message-btn">
+            refresh
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      window.addEventListener(
+        'error',
+        function (e) {
+          // console.log('e', e);
+          // console.log('e && e.targett', e && e.target);
+          // console.log('ErrorEvent', ErrorEvent);
+          // console.log('e instanceof ErrorEvent', e instanceof ErrorEvent);
+          const tag = e && e.target;
+          if (tag && tag.tagName === 'SCRIPT' && !(e instanceof ErrorEvent)) {
+            const errorMessageElement =
+              document.getElementById('error-message');
+            if (errorMessageElement) {
+              errorMessageElement.style.display = 'block';
+            }
+          }
+        },
+        true
+      );
+    </script>
+    <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+    <script nomodule crossorigin id="vite-legacy-polyfill" src="./assets/polyfills-legacy-5ff19b17.js"></script>
+    <script nomodule crossorigin id="vite-legacy-entry" data-src="./assets/index-legacy-1e1d97e3.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+  </body>
+</html>

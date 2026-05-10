@@ -1,0 +1,1 @@
+System.register([],(function(t,e){"use strict";return{execute:function(){var e={exports:{}};try{e.exports="undefined"!=typeof XMLHttpRequest&&"withCredentials"in new XMLHttpRequest}catch(r){e.exports=!1}t("h",e.exports)}}}));

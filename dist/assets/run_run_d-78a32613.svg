@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>run_run_d</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-102.000000, -1328.000000)">
+            <g id="分组-146" transform="translate(102.000000, 1328.000000)">
+                <g id="运行-灰色">
+                    <g id="运行" transform="translate(5.000000, 5.000000)">
+                        <circle id="Oval-4" fill="#D0D0D0" cx="20" cy="20" r="20"></circle>
+                        <path d="M14,11.6571903 C14,10.0545555 15.0902375,9.51924009 16.4518459,10.4731943 L28.1647887,18.6793893 C29.5189046,19.6280918 29.5263703,21.1610311 28.1647887,22.1149854 L16.4518459,30.3211804 C15.0977569,31.2698829 14,30.7372321 14,29.1371585 L14,11.6571903 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

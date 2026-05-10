@@ -1,0 +1,1 @@
+var n=function(n,o,r){var u=!1;return r=r||t,c.count=n,0===n?o():c;function c(n,t){if(c.count<=0)throw new Error("after called too many times");--c.count,n?(u=!0,o(n),o=r):0!==c.count||u||o(null,t)}};function t(){}export{n as a};

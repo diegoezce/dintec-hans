@@ -1,0 +1,1 @@
+import{bl as s}from"./index-bac3c45d.js";const a=`http://${location.hostname}:7001`,t=t=>s.post(`${a}/api/system/saveProgramTempFile`,t),e=t=>s.post(`${a}/api/system/readProgramTempFile`,t),o=t=>s.post(`${a}/api/system/readProgramContent`,t);export{e as a,o as r,t as s};

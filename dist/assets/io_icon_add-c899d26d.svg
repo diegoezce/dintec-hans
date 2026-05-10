@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>io_icon_add</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-22.000000, -1937.000000)" fill-rule="nonzero">
+            <g id="io_icon_add" transform="translate(22.000000, 1937.000000)">
+                <circle id="椭圆形" fill="#3790FC" cx="21" cy="21" r="21"></circle>
+                <path d="M19.5,20 L19.5,13 C19.5,12.1715729 20.1715729,11.5 21,11.5 C21.8284271,11.5 22.5,12.1715729 22.5,13 L22.5,20 L29.5,20 C30.3284271,20 31,20.6715729 31,21.5 C31,22.3284271 30.3284271,23 29.5,23 L22.5,23 L22.5,30 C22.5,30.8284271 21.8284271,31.5 21,31.5 C20.1715729,31.5 19.5,30.8284271 19.5,30 L19.5,23 L12.5,23 C11.6715729,23 11,22.3284271 11,21.5 C11,20.6715729 11.6715729,20 12.5,20 L19.5,20 Z" id="合并形状" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

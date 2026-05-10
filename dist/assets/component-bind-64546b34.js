@@ -1,0 +1,1 @@
+var n=[].slice,r=function(r,t){if("string"==typeof t&&(t=r[t]),"function"!=typeof t)throw new Error("bind() requires a function");var c=n.call(arguments,2);return function(){return t.apply(r,c.concat(n.call(arguments)))}};export{r as c};

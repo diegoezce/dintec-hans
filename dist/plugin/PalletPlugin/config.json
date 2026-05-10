@@ -1,0 +1,14 @@
+{
+  "name": "PalletPlugin",
+  "page_setting": "PalletPlugin.js",
+  "logic_name":"PalletPlugin",
+  "logic_function": "",
+  "author": {
+    "name": "Lei Dong",
+    "email": "",
+    "url": ""
+  },  
+  "description": "",  
+  "license": "",
+  "version": "2.0.0"
+}

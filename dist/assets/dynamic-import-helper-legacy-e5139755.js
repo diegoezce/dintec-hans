@@ -1,0 +1,1 @@
+System.register([],(function(e,n){"use strict";return{execute:function(){e("_",((e,n)=>{const t=e[n];return t?"function"==typeof t?t():Promise.resolve(t):new Promise(((e,t)=>{("function"==typeof queueMicrotask?queueMicrotask:setTimeout)(t.bind(null,new Error("Unknown variable dynamic import: "+n)))}))}))}}}));

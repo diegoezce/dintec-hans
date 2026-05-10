@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Han`s robot static information</title>
+    <style>
+      .comment_configShow {
+        width: 100%;
+        height: 100%;
+        padding-left: 20px;
+
+        overflow-y: scroll;
+      }
+      .configShow_title {
+        line-height: 40px;
+        font-size: 20px;
+      }
+      .element_info {
+        /* display: flex; */
+
+        line-height: 40px;
+      }
+      span {
+        font-size: 15px;
+        line-height: 62px;
+      }
+
+      .speed_element {
+        display: flex;
+        line-height: 20px;
+      }
+
+      .display_info {
+        display: flex;
+        line-height: 40px;
+      }
+
+      .title {
+        width: 180px;
+        text-align: left;
+      }
+
+      .title-second {
+        width: 180px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="comment_configShow">
+      <div class="configShow_title">Machine Information</div>
+      <div class="display_info">
+        <!-- 机器型号 -->
+        <div class="title">Model Type:</div>
+
+        <div id="modelType"></div>
+      </div>
+      <!-- 最大负载 -->
+      <div class="display_info">
+        <div class="title">Max Payload:</div>
+
+        <div id="payload"></div>
+      </div>
+      <!-- SN号 -->
+      <div class="display_info">
+        <div class="title">SN:</div>
+
+        <div id="sNumber"></div>
+      </div>
+      <!-- mac地址 -->
+      <div class="display_info">
+        <div class="title">Mac Address:</div>
+
+        <div id="macAddress"></div>
+      </div>
+      <!-- 最大速度 -->
+      <div class="element_info">
+        <div class="title">Max Linear Speed:</div>
+
+        <div class="joint_speed" id="maxLineSpeed">
+          <div class="speed_element">
+            <div class="title-second">level1:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">level2:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">level3:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">level4:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">level5:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">level6:</div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <!-- 最大关节速度 -->
+      <div class="element_info">
+        <div class="title">Max Joint Speed:</div>
+
+        <div class="joint_speed" id="joint">
+          <div class="speed_element">
+            <div class="title-second">J1:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">J2:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">J3:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">J4:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">J5:</div>
+            <div></div>
+          </div>
+          <div class="speed_element">
+            <div class="title-second">J6:</div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var localUrl = window.location.href.split(
+      "/dist/static/RobotData/index.html"
+    )[0];
+
+    var baseUrl = `${localUrl}:7001`;
+
+    // var baseUrl = "http://10.0.0.69:7001"; //在线测试
+
+    var callMachine = (data) =>
+      fetch(baseUrl + "/api/home/callMachine", {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+    //获取SVN号
+    function getSvn() {
+      callMachine(
+        JSON.stringify({
+          mname: "ReadRobotSN",
+          objparam: [0, 0, 0],
+        })
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          let result = JSON.parse(res);
+
+          if (result[0] == 0) {
+            document.getElementById("sNumber").innerHTML = result[1];
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+    //获取Max地址
+    function getAdress() {
+      callMachine(
+        JSON.stringify({
+          mname: "ReadRobotMAC",
+          objparam: [0, 0],
+        })
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          // console.log("==33333===res", res);
+          let result = JSON.parse(res);
+          if (result[0] == 0) {
+            // $("#macAddress")[0].innerHTML = res.data[1];
+            document.getElementById("macAddress").innerHTML = result[1];
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    //获取不同安全等级最大线速度
+    function getSafeLevel() {
+      callMachine(
+        JSON.stringify({
+          mname: "ReadLinearMaxVelPerSafeLevel",
+          objparam: [0, 0],
+        })
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          let result = JSON.parse(res);
+          if (result[0] == 0) {
+            for (let i = 1; i < result.slice(1).length + 1; i++) {
+              document.getElementById("maxLineSpeed").childNodes[
+                2 * i - 1
+              ].childNodes[3].innerHTML = result.slice(1)[i - 1];
+            }
+          }
+        });
+    }
+
+    //获取最大关节速度
+
+    function getJoint() {
+      callMachine(
+        JSON.stringify({
+          mname: "ReadJointMaxVel",
+          objparam: [0, 0],
+        })
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          let result = JSON.parse(res);
+          if (result[0] == 0) {
+            // $("#joint")[0].__vue__.jointSpeed = res.data.slice(1);
+            for (let i = 1; i < result.slice(1).length + 1; i++) {
+              document.getElementById("joint").childNodes[
+                2 * i - 1
+              ].childNodes[3].innerHTML = result.slice(1)[i - 1];
+            }
+          }
+        });
+    }
+
+    //获取机械臂类型
+    function getmodelType() {
+      callMachine(
+        JSON.stringify({
+          mname: "ReadRobotModel",
+          objparam: [0, 0],
+        })
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          // console.log("=====333=====类型====", res);
+          // $("#modelType")[0].innerHTML = res.data;
+          document.getElementById("modelType").innerHTML = res;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    //获取最大负载
+    function getpayLoad() {
+      callMachine(
+        JSON.stringify({
+          mname: "ReadMaxPayload",
+          objparam: [0, 0],
+        })
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          let result = JSON.parse(res);
+
+          if (result[0] == "0") {
+            document.getElementById("payload").innerHTML = result[1];
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+
+    getAdress();
+    getSvn();
+    getSafeLevel();
+    getpayLoad();
+    getJoint();
+    getmodelType();
+  </script>
+</html>

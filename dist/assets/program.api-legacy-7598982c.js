@@ -1,0 +1,1 @@
+System.register(["./index-legacy-1e1d97e3.js"],(function(e,t){"use strict";var s;return{setters:[e=>{s=e.bl}],execute:function(){const t=`http://${location.hostname}:7001`;e("s",(e=>s.post(`${t}/api/system/saveProgramTempFile`,e))),e("a",(e=>s.post(`${t}/api/system/readProgramTempFile`,e))),e("r",(e=>s.post(`${t}/api/system/readProgramContent`,e)))}}}));

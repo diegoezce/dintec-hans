@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="GBK"?>
+<config>
+  <modelfile part ="0" file="E05_BASE.STL" texture="2"/> 
+  
+  <modelfile part ="1" file="E05_MODULE_25.STL" texture="3"/>
+  <modelfile part ="1" file="E05_MODULE_25_COVER1.STL" texture="4"/>
+  <modelfile part ="1" file="E05_MODULE_25_COVER2.STL" texture="4"/>
+  <modelfile part ="1" file="E05_MODULE_25_RING1.STL" texture="5"/>
+  <modelfile part ="1" file="E05_MODULE_25_RING2.STL" texture="5"/>
+  
+  <modelfile part ="2" file="E05_MK2_DOWN.STL" texture="3"/>
+  
+  <modelfile part ="3" file="E05_MODULE_20.STL" texture="3"/>
+  <modelfile part ="3" file="E05_MODULE_20_COVER1.STL" texture="4"/>
+  <modelfile part ="3" file="E05_MODULE_20_COVER2.STL" texture="4"/>
+  <modelfile part ="3" file="E05_MODULE_20_RING1.STL" texture="5"/>
+  <modelfile part ="3" file="E05_MODULE_20_RING2.STL" texture="5"/>
+  
+  <modelfile part ="4" file="E05_MK2_UP.STL" texture="3"/>
+  <modelfile part ="4" file="E05_MK2_UP_COVER1.STL" texture="4"/>
+  
+  <modelfile part ="5" file="E05_MODULE_14.STL" texture="3"/>
+  <modelfile part ="5" file="E05_MODULE_14_COVER1.STL" texture="4"/>
+  <modelfile part ="5" file="E05_MODULE_14_COVER2.STL" texture="4"/>
+  <modelfile part ="5" file="E05_MODULE_14_RING1.STL" texture="5"/>
+  <modelfile part ="5" file="E05_MODULE_14_RING2.STL" texture="5"/>
+  
+  <modelfile part ="6" file="E05_IO.STL" texture="2"/>
+  
+  <joint rotatePoint="0, 74, 0" rotateAxis="0, 1, 0" />
+  <joint rotatePoint="0, 220, 0" rotateAxis="0,0,-1" />
+  <joint rotatePoint="0, 600, 0" rotateAxis="0,0,1" />
+  <joint rotatePoint="0, 724, 0" rotateAxis="0,1,0" />
+  <joint rotatePoint="0, 1020, 0" rotateAxis="0,0,1" />
+  <joint rotatePoint="0, 1126, 0" rotateAxis="0,1,0" />
+
+  <axisfile file="Axis.STL"/>
+</config>

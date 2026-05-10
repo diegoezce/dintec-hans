@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>run_onerun_default</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-316.000000, -1193.000000)" fill="#333333">
+            <g id="分组-141" transform="translate(316.000000, 1193.000000)">
+                <g id="单行运行">
+                    <g transform="translate(14.000000, 14.000000)">
+                        <path d="M0,1.66001592 C0,0.0573810945 1.09023746,-0.477934328 2.45184594,0.4760199 L14.1647887,8.68221493 C15.5189046,9.63091741 15.5263703,11.1638567 14.1647887,12.1178109 L2.45184594,20.324006 C1.09775689,21.2727085 0,20.7400577 0,19.1399841 L0,1.66001592 Z" id="Shape" fill-rule="nonzero"></path>
+                        <rect id="Rectangle-7" x="16.8" y="0.8" width="2.4" height="19.2" rx="1.2"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

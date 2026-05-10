@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>run_stop_default</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-424.000000, -1326.000000)">
+            <g id="run_stop_default" transform="translate(424.000000, 1326.000000)">
+                <g id="停止-红色">
+                    <circle id="椭圆形" fill="#FF2424" fill-rule="nonzero" cx="25" cy="25" r="20"></circle>
+                    <rect id="Rectangle-9" fill="#FFFFFF" fill-rule="evenodd" x="17" y="17" width="16" height="16" rx="3.2"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

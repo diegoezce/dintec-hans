@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>script_if_black</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-564.000000, -689.000000)">
+            <g id="分组-63" transform="translate(564.000000, 689.000000)">
+                <g id="图标-if">
+                    <rect id="Rectangle-Copy-16" fill="#D8D8D8" opacity="0" x="0" y="0" width="32" height="32"></rect>
+                    <g id="if" stroke-width="1" transform="translate(10.000000, 8.000000)" fill="#333333" stroke="#333333">
+                        <path d="M11.7333333,3.77142857 L9.28,1.14285714 L8.21333333,0 L1.06666667,0 C0.426666667,0 0,0.457142857 0,1.14285714 L0,14.8571429 C0,15.5428571 0.426666667,16 1.06666667,16 L11.7333333,16 C12.3733333,16 12.8,15.5428571 12.8,14.8571429 L12.8,4.91428571 L11.7333333,3.77142857 Z M8.53333333,1.94285714 L10.9866667,4.57142857 L8.53333333,4.57142857 L8.53333333,1.94285714 Z M11.7333333,14.8571429 L1.06666667,14.8571429 L1.06666667,1.14285714 L7.46666667,1.14285714 L7.46666667,4.57142857 C7.46666667,5.25714286 7.89333333,5.71428571 8.53333333,5.71428571 L11.7333333,5.71428571 L11.7333333,14.8571429 Z" id="Shape" stroke-width="0.2" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

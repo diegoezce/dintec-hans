@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>断点</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-297.000000, -1388.000000)" fill-rule="nonzero">
+            <g id="断点" transform="translate(297.000000, 1388.000000)">
+                <rect id="矩形" stroke="#979797" fill="#D8D8D8" opacity="0" x="0.5" y="0.5" width="49" height="49"></rect>
+                <circle id="椭圆形" fill="#E3E7EC" cx="25" cy="25" r="20"></circle>
+                <path d="M17,18.3390498 C17,17.0440822 17.8616674,16.6115344 18.9378125,17.3823524 L28.1951183,24.0131563 C29.2653416,24.7797308 29.2712421,26.0183828 28.1951183,26.7892008 L18.9378125,33.4200047 C17.8676104,34.1865792 17,33.7561845 17,32.4632864 L17,18.3390498 Z" id="Shape" fill="#C0C0C0"></path>
+                <path d="M33,18 L33,32" id="直线-3" stroke="#C0C0C0" stroke-linecap="round" stroke-dasharray="1,2"></path>
+                <circle id="椭圆形-copy" fill="#C0C0C0" cx="33" cy="34" r="3"></circle>
+                <circle id="椭圆形" fill="#C0C0C0" cx="33" cy="17" r="3"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

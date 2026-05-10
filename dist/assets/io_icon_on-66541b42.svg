@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52 (66869) - http://www.bohemiancoding.com/sketch -->
+    <title>io_icon_on</title>
+    <desc>Created with Sketch.</desc>
+    <g id="规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图标" transform="translate(-256.000000, -1937.000000)" fill-rule="nonzero">
+            <g id="io_icon_on" transform="translate(256.000000, 1937.000000)">
+                <circle id="椭圆形-copy" fill="#3790FC" cx="21" cy="21" r="21"></circle>
+                <path d="M22.2719975,17.0351959 L29.565626,28.7050016 C30.0046915,29.4075064 29.7911317,30.332932 29.0886269,30.7719975 C28.8502295,30.9209958 28.5747581,31 28.2936285,31 L13.7063715,31 C12.8779443,31 12.2063715,30.3284271 12.2063715,29.5 C12.2063715,29.2188704 12.2853756,28.943399 12.434374,28.7050016 L19.7280025,17.0351959 C20.167068,16.3326911 21.0924936,16.1191314 21.7949984,16.5581969 C21.9881521,16.6789179 22.1512764,16.8420422 22.2719975,17.0351959 Z" id="三角形" fill="#FFFFFF" transform="translate(21.000000, 23.000000) scale(1, -1) translate(-21.000000, -23.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

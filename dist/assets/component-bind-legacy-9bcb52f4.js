@@ -1,0 +1,1 @@
+System.register([],(function(n,t){"use strict";return{execute:function(){var t=[].slice;n("c",(function(n,r){if("string"==typeof r&&(r=n[r]),"function"!=typeof r)throw new Error("bind() requires a function");var e=t.call(arguments,2);return function(){return r.apply(n,e.concat(t.call(arguments)))}}))}}}));

@@ -1,0 +1,1 @@
+System.register([],(function(r,e){"use strict";return{execute:function(){r("a",(function(r,e,n){var t=r.byteLength;if(e=e||0,n=n||t,r.slice)return r.slice(e,n);if(e<0&&(e+=t),n<0&&(n+=t),n>t&&(n=t),e>=t||e>=n||0===t)return new ArrayBuffer(0);for(var i=new Uint8Array(r),u=new Uint8Array(n-e),f=e,c=0;f<n;f++,c++)u[c]=i[f];return u.buffer}))}}}));

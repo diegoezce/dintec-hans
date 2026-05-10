@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="GBK"?>
+
+-<config>
+
+<modelfile texture="0" file="E18_BASE.STL" part="2"/>
+
+<modelfile texture="1" file="E18_MODULE_40.STL" part="3"/>
+
+<modelfile texture="2" file="E18_MK2_DOWN.STL" part="3"/>
+
+<modelfile texture="3" file="E18_MODULE_25.STL" part="3"/>
+
+<modelfile texture="4" file="E18_MK2_UP.STL" part="3"/>
+
+<modelfile texture="5" file="E18_MODULE_17.STL" part="3"/>
+
+<modelfile texture="6" file="E18_IO.STL" part="2"/>
+
+<joint rotateAxis="0, 1, 0" rotatePoint="0, 80, 0"/>
+
+<joint rotateAxis="0,0,1" rotatePoint="0, 262, 0"/>
+
+<joint rotateAxis="0,0,1" rotatePoint="0, 842, 0"/>
+
+<joint rotateAxis="0,1,0" rotatePoint="0, 989, 0"/>
+
+<joint rotateAxis="0,0,1" rotatePoint="0, 1362 , 0"/>
+
+<joint rotateAxis="0,1,0" rotatePoint="0, 1473, 0"/>
+
+<axisfile file="Axis.STL"/>
+
+</config>
