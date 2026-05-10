@@ -482,21 +482,50 @@
     } catch (_) { /* silent — robot might not be connected yet */ }
   }
 
-  // ── Poll contapalet variable ───────────────────────────────────
-  async function pollVar() {
-    try {
-      const { errorcode, results } = await jsonCmd('ReadVar', [{ Name: 'contapalet' }]);
-      const el = document.getElementById('varContapalet');
-      if ((errorcode === '0' || errorcode === 0) && results && results[0] != null) {
-        const val = typeof results[0] === 'object' ? (results[0].Value ?? results[0].value ?? JSON.stringify(results[0])) : results[0];
-        el.textContent = val;
-      }
-    } catch (_) { /* silent */ }
+  // ── Socket.IO: listen for real-time script variables ──────────
+  let socket = null;
+
+  function connectSocket() {
+    if (socket) { socket.disconnect(); socket = null; }
+    const ip = document.getElementById('ipInput').value.trim();
+    // Load socket.io-client from the robot's own bundle
+    const script = document.createElement('script');
+    script.src = `http://${ip}:7001/dist/assets/socket.io-client-9183d4c9.js`;
+    script.onload = () => initSocket(ip);
+    script.onerror = () => {
+      // fallback: load from CDN
+      const cdn = document.createElement('script');
+      cdn.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
+      cdn.onload = () => initSocket(ip);
+      document.head.appendChild(cdn);
+    };
+    document.head.appendChild(script);
   }
+
+  function initSocket(ip) {
+    if (typeof io === 'undefined') { log('Socket.IO not available', 'err'); return; }
+    socket = io(`http://${ip}:7001`, { transports: ['websocket'], reconnection: true });
+
+    socket.on('connect', () => log('Socket connected', 'ok'));
+    socket.on('disconnect', () => log('Socket disconnected', 'err'));
+
+    // Real-time script variables — same event the main app uses
+    socket.on('hrscript/vars', (data) => {
+      const vars = Array.isArray(data) ? data : (data?.vars ?? data?.variables ?? []);
+      const entry = vars.find(v => (v.Name || v.name || '').toLowerCase() === 'contapalet');
+      if (entry != null) {
+        const val = entry.Value ?? entry.value ?? entry.val ?? '?';
+        document.getElementById('varContapalet').textContent = val;
+      }
+    });
+  }
+
+  // Connect socket on load and whenever IP changes
+  document.getElementById('ipInput').addEventListener('change', connectSocket);
+  connectSocket();
 
   // Start polling
   setInterval(pollStatus, 3000);
-  setInterval(pollVar, 1000);
 </script>
 </body>
 </html>
