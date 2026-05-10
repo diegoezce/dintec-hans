@@ -218,6 +218,34 @@
       border-top: 1px solid #2d3448;
       margin: 24px 0;
     }
+
+    .var-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f1117;
+      border: 1px solid #2d3448;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-top: 12px;
+    }
+
+    .var-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+
+    .var-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f1f5f9;
+      font-family: "SF Mono", "Fira Code", monospace;
+      letter-spacing: 0.02em;
+    }
   </style>
 </head>
 <body>
@@ -257,6 +285,12 @@
   <div class="secondary-row">
     <button class="btn btn-pause"    id="btnPause"    onclick="pauseProgram()">⏸ Pause</button>
     <button class="btn btn-continue" id="btnContinue" onclick="continueProgram()">▶▶ Continue</button>
+  </div>
+
+  <!-- Variable display -->
+  <div class="var-box">
+    <div class="var-label">contapalet</div>
+    <div class="var-value" id="varContapalet">—</div>
   </div>
 
   <!-- Status -->
@@ -448,8 +482,21 @@
     } catch (_) { /* silent — robot might not be connected yet */ }
   }
 
+  // ── Poll contapalet variable ───────────────────────────────────
+  async function pollVar() {
+    try {
+      const { errorcode, results } = await jsonCmd('ReadVar', [{ Name: 'contapalet' }]);
+      const el = document.getElementById('varContapalet');
+      if ((errorcode === '0' || errorcode === 0) && results && results[0] != null) {
+        const val = typeof results[0] === 'object' ? (results[0].Value ?? results[0].value ?? JSON.stringify(results[0])) : results[0];
+        el.textContent = val;
+      }
+    } catch (_) { /* silent */ }
+  }
+
   // Start polling
   setInterval(pollStatus, 3000);
+  setInterval(pollVar, 1000);
 </script>
 </body>
 </html>
