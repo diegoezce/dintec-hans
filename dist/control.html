@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Robot Control — Hans Elfin</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -239,6 +242,19 @@
       font-family: "SF Mono", "Fira Code", monospace;
     }
 
+    .btn-reset {
+      background: transparent;
+      border: 1px solid #2d3448;
+      color: #64748b;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-reset:hover { color: #f1f5f9; border-color: #475569; }
+    .btn-reset:disabled { opacity: 0.3; cursor: not-allowed; }
+
     .var-value {
       font-size: 28px;
       font-weight: 700;
@@ -288,9 +304,19 @@
   </div>
 
   <!-- Variable display -->
+  <div class="section" style="margin-top:16px; margin-bottom:0;">
+    <label>Variable</label>
+    <div class="input-row">
+      <select id="varSelect" onchange="selectVar(this.value)" style="flex:1;">
+        <option value="">— load variables from robot —</option>
+      </select>
+      <button class="btn btn-load" id="btnLoadVars" onclick="loadVarList()">Load vars</button>
+    </div>
+  </div>
   <div class="var-box">
-    <div class="var-label">contapalet</div>
+    <div class="var-label" id="varNameLabel">—</div>
     <div class="var-value" id="varContapalet">—</div>
+    <button class="btn btn-reset" id="btnReset" onclick="resetVar()" title="Reset to 0">↺</button>
   </div>
 
   <!-- Status -->
@@ -404,6 +430,7 @@
     try {
       const { errorcode } = await jsonCmd('RunScriptInEditor', [{ Name: programName, DebugMode: '0' }]);
       if (errorcode !== '0' && errorcode !== 0) throw new Error(`errorcode ${errorcode}`);
+      programRunning = true;
       log('Program started', 'ok');
       setStatus('running', programName);
     } catch (e) {
@@ -423,6 +450,7 @@
       const result = await callMachine({ mname: 'StopScript', objparam: [0, 0] });
       const code = Array.isArray(result) ? result[0] : result?.data ?? result;
       if (code !== 0 && code !== '0') throw new Error(`code ${code}`);
+      programRunning = false;
       log('Program stopped', 'ok');
       setStatus('idle');
     } catch (e) {
@@ -482,47 +510,165 @@
     } catch (_) { /* silent — robot might not be connected yet */ }
   }
 
-  // ── Socket.IO: listen for real-time script variables ──────────
-  let socket = null;
+  // ── Real-time variables via raw WebSocket (socket.io protocol) ──
+  let rawWs = null;
+  let wsEio = 4;
+  let wsReconnectTimer = null;
+  let varPollTimer = null;
+  let watchedVar = '';
+  let programRunning = false;
 
-  function connectSocket() {
-    if (socket) { socket.disconnect(); socket = null; }
+  function connectRawSocket() {
+    if (rawWs) { rawWs.onclose = null; rawWs.close(); rawWs = null; }
+    if (wsReconnectTimer) { clearTimeout(wsReconnectTimer); wsReconnectTimer = null; }
     const ip = document.getElementById('ipInput').value.trim();
-    // Load socket.io-client from the robot's own bundle
-    const script = document.createElement('script');
-    script.src = `http://${ip}:7001/dist/assets/socket.io-client-9183d4c9.js`;
-    script.onload = () => initSocket(ip);
-    script.onerror = () => {
-      // fallback: load from CDN
-      const cdn = document.createElement('script');
-      cdn.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
-      cdn.onload = () => initSocket(ip);
-      document.head.appendChild(cdn);
+    openWs(ip, wsEio);
+  }
+
+  function openWs(ip, eio) {
+    const ws = new WebSocket(`ws://${ip}:7001/socket.io/?EIO=${eio}&transport=websocket`);
+    rawWs = ws;
+
+    ws.onopen = () => {
+      if (eio === 4) ws.send('40'); // socket.io v3/v4: send CONNECT packet
     };
-    document.head.appendChild(script);
-  }
 
-  function initSocket(ip) {
-    if (typeof io === 'undefined') { log('Socket.IO not available', 'err'); return; }
-    socket = io(`http://${ip}:7001`, { transports: ['websocket'], reconnection: true });
-
-    socket.on('connect', () => log('Socket connected', 'ok'));
-    socket.on('disconnect', () => log('Socket disconnected', 'err'));
-
-    // Real-time script variables — same event the main app uses
-    socket.on('hrscript/vars', (data) => {
-      const vars = Array.isArray(data) ? data : (data?.vars ?? data?.variables ?? []);
-      const entry = vars.find(v => (v.Name || v.name || '').toLowerCase() === 'contapalet');
-      if (entry != null) {
-        const val = entry.Value ?? entry.value ?? entry.val ?? '?';
-        document.getElementById('varContapalet').textContent = val;
+    ws.onmessage = ({ data }) => {
+      if (data === '2') { ws.send('3'); return; }         // PING → PONG
+      if (data.startsWith('40')) {
+        log('Socket connected', 'ok');
+        // Start polling as backup in case hrscript/vars never fires
+        startVarPolling();
+        return;
       }
-    });
+      if (data.startsWith('42')) {
+        try {
+          const [event, payload] = JSON.parse(data.slice(2));
+          if (event === 'RTInfo/Script' && payload) {
+            // Sync running state from robot in real time
+            const running = Array.isArray(payload.cmdid) && payload.cmdid.some(id => id !== '');
+            if (running !== programRunning) {
+              programRunning = running;
+              if (running) {
+                const prog = document.getElementById('programInput').value || '';
+                setStatus('running', prog);
+              } else {
+                setStatus('idle');
+              }
+            }
+            if (programRunning && watchedVar && payload.GlobalVar) {
+              const entry = payload.GlobalVar.find(o => watchedVar in o);
+              if (entry) {
+                document.getElementById('varContapalet').textContent = entry[watchedVar];
+              }
+            }
+          }
+        } catch (_) {}
+      }
+    };
+
+    ws.onerror = () => {
+      if (eio === 4) { wsEio = 3; openWs(ip, 3); } // retry with v2 protocol
+      else { log('WebSocket failed — polling every 2s', 'info'); startVarPolling(); }
+    };
+
+    ws.onclose = () => {
+      wsReconnectTimer = setTimeout(() => {
+        const currentIp = document.getElementById('ipInput').value.trim();
+        openWs(currentIp, wsEio);
+      }, 4000);
+    };
   }
 
-  // Connect socket on load and whenever IP changes
-  document.getElementById('ipInput').addEventListener('change', connectSocket);
-  connectSocket();
+  let varObjects = {}; // full variable objects keyed by Name, needed for safe UpdateVar
+
+  async function loadVarList() {
+    const programName = document.getElementById('programInput').value.trim();
+    if (!programName) { log('Select a program first', 'err'); return; }
+
+    const btn = document.getElementById('btnLoadVars');
+    btn.disabled = true;
+    btn.textContent = 'Loading…';
+    try {
+      const { errorcode, results } = await jsonCmd('ReadVar', [{ PageNum: '0', PageSize: '0' }]);
+      if (errorcode !== '0' && errorcode !== 0) throw new Error(`errorcode ${errorcode}`);
+      const vars = results.slice(1).filter(v => v && (v.Name || v.name));
+      if (!vars.length) throw new Error('no variables found in program');
+
+      varObjects = {};
+      vars.forEach(v => { varObjects[v.Name] = v; });
+
+      const sel = document.getElementById('varSelect');
+      sel.innerHTML = '<option value="">— select variable —</option>';
+      vars.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.Name;
+        opt.textContent = `${v.Name} (${v.VarType})`;
+        sel.appendChild(opt);
+      });
+      log(`Loaded ${vars.length} variable(s) from "${programName}"`, 'ok');
+    } catch (e) {
+      log(`Failed to load variables: ${e.message}`, 'err');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Load vars';
+    }
+  }
+
+  function selectVar(name) {
+    if (!name) return;
+    watchedVar = name;
+    document.getElementById('varNameLabel').textContent = name;
+    document.getElementById('varContapalet').textContent = '—';
+  }
+
+  async function resetVar() {
+    if (!watchedVar) { log('Select a variable first', 'err'); return; }
+    const btn = document.getElementById('btnReset');
+    btn.disabled = true;
+    try {
+      const wasRunning = document.getElementById('statusDot').classList.contains('dot-running');
+      programRunning = false;
+      if (wasRunning) {
+        await callMachine({ mname: 'StopScript', objparam: [0, 0] });
+        await new Promise(r => setTimeout(r, 400));
+        setStatus('idle');
+      }
+      // Only reset the display — stored initial value in the program stays unchanged
+      document.getElementById('varContapalet').textContent = '0';
+      log(`Reset ${watchedVar} → 0`, 'ok');
+    } catch (e) {
+      log(`Reset failed: ${e.message}`, 'err');
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function startVarPolling() {
+    if (varPollTimer) return;
+    varPollTimer = setInterval(async () => {
+      if (!watchedVar) return;
+      try {
+        if (!programRunning) return;
+        const { errorcode, results } = await jsonCmd('ReadVar', [{ PageNum: '0', PageSize: '0' }]);
+        if ((errorcode === '0' || errorcode === 0) && Array.isArray(results)) {
+          const match = results.find(r => r && (r.Name || r.name) === watchedVar);
+          if (match) {
+            const val = match.VarValue ?? match.Value ?? match.value ?? '?';
+            document.getElementById('varContapalet').textContent = val;
+          }
+        }
+      } catch (_) {}
+    }, 2000);
+  }
+
+  // Connect on load and whenever IP changes
+  document.getElementById('ipInput').addEventListener('change', () => {
+    if (varPollTimer) { clearInterval(varPollTimer); varPollTimer = null; }
+    wsEio = 4;
+    connectRawSocket();
+  });
+  connectRawSocket();
 
   // Start polling
   setInterval(pollStatus, 3000);
