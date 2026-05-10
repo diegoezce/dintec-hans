@@ -365,47 +365,19 @@
 
     const btn = document.getElementById('btnStart');
     btn.disabled = true;
+    log(`Starting "${programName}"…`, 'info');
 
-    // Candidates to try in order — we log the raw robot response for each
-    const candidates = [
-      { label: 'RunScriptInEditor (direct)',   payload: { mname: 'RunScriptInEditor',   objparam: [0, 0, programName, '0'] } },
-      { label: 'StartScript (direct)',          payload: { mname: 'StartScript',          objparam: [0, 0, programName, '0'] } },
-      { label: 'RunScriptInEditor (JsonCmd)',   payload: { mname: 'JsonCmd', objparam: [0, 0, JSON.stringify({ cmdname: 'RunScriptInEditor',   parameters: [{ Name: programName, DebugMode: '0' }], task: [] })] } },
-      { label: 'SwitchProgramForWeb (JsonCmd)', payload: { mname: 'JsonCmd', objparam: [0, 0, JSON.stringify({ cmdname: 'SwitchProgramForWeb', parameters: [{ Name: programName }],                  task: [] })] } },
-    ];
-
-    let started = false;
-    for (const { label, payload } of candidates) {
-      try {
-        log(`Trying: ${label}…`, 'info');
-        const raw = await callMachine(payload);
-        // Log exact response so we can diagnose
-        log(`  ↳ response: ${JSON.stringify(raw)}`, 'info');
-
-        // Determine success: errorcode 0 or data[0] == 0
-        const code = Array.isArray(raw)
-          ? raw[0]
-          : raw?.errorcode ?? raw?.data ?? raw;
-        const ok = code === 0 || code === '0';
-        if (ok) {
-          log(`✓ Started via: ${label}`, 'ok');
-          setStatus('running', programName);
-          started = true;
-          break;
-        } else {
-          log(`  ↳ non-zero code (${code}), trying next…`, 'info');
-        }
-      } catch (e) {
-        log(`  ↳ error: ${e.message}`, 'err');
-      }
-    }
-
-    if (!started) {
-      log('All start methods failed — check log above for robot responses', 'err');
+    try {
+      const { errorcode } = await jsonCmd('RunScriptInEditor', [{ Name: programName, DebugMode: '0' }]);
+      if (errorcode !== '0' && errorcode !== 0) throw new Error(`errorcode ${errorcode}`);
+      log('Program started', 'ok');
+      setStatus('running', programName);
+    } catch (e) {
+      log(`Start failed: ${e.message}`, 'err');
       setStatus('error');
+    } finally {
+      btn.disabled = false;
     }
-
-    btn.disabled = false;
   }
 
   // ── STOP ───────────────────────────────────────────────────────
