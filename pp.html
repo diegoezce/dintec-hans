@@ -1,869 +1,389 @@
-<!DOCTYPE html>
-
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robot Companion - Propuesta de Producto</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-```
-    :root {
-        --primary: #0a0e27;
-        --secondary: #1a1f3a;
-        --accent: #00d4ff;
-        --accent-warm: #ff6b35;
-        --text-primary: #f0f4f8;
-        --text-secondary: #a8b5cc;
-        --border: #2a3145;
-        --success: #00c853;
-    }
-
-    body {
-        font-family: 'Sohne', 'Segoe UI', -apple-system, sans-serif;
-        background: linear-gradient(135deg, var(--primary) 0%, #0f1535 100%);
-        color: var(--text-primary);
-        line-height: 1.6;
-        position: relative;
-        overflow-x: hidden;
-    }
-
-    /* Background effect */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-            radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.08) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Header */
-    header {
-        padding: 80px 0 60px;
-        border-bottom: 1px solid var(--border);
-        animation: slideDown 0.8s ease-out;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .header-content h1 {
-        font-size: 3.5rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        letter-spacing: -1px;
-        background: linear-gradient(135deg, var(--accent) 0%, #00a8cc 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .header-content p {
-        font-size: 1.3rem;
-        color: var(--text-secondary);
-        max-width: 700px;
-    }
-
-    .badge {
-        display: inline-block;
-        background: rgba(0, 212, 255, 0.1);
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        padding: 8px 16px;
-        border-radius: 24px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 20px;
-        letter-spacing: 0.5px;
-    }
-
-    /* Sections */
-    section {
-        padding: 80px 0;
-        border-bottom: 1px solid var(--border);
-        animation: fadeIn 0.8s ease-out forwards;
-        opacity: 0;
-    }
-
-    @keyframes fadeIn {
-        to {
-            opacity: 1;
-        }
-    }
-
-    section:nth-child(2) { animation-delay: 0.1s; }
-    section:nth-child(3) { animation-delay: 0.2s; }
-    section:nth-child(4) { animation-delay: 0.3s; }
-    section:nth-child(5) { animation-delay: 0.4s; }
-    section:nth-child(6) { animation-delay: 0.5s; }
-
-    h2 {
-        font-size: 2.5rem;
-        margin-bottom: 40px;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-        position: relative;
-        padding-bottom: 20px;
-    }
-
-    h2::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100px;
-        height: 4px;
-        background: linear-gradient(90deg, var(--accent), var(--accent-warm));
-        border-radius: 2px;
-    }
-
-    h3 {
-        font-size: 1.4rem;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        color: var(--accent);
-        font-weight: 600;
-    }
-
-    /* Grid layouts */
-    .grid-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        margin-top: 40px;
-    }
-
-    .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        margin-top: 40px;
-    }
-
-    /* Cards */
-    .card {
-        background: linear-gradient(135deg, var(--secondary) 0%, rgba(26, 31, 58, 0.5) 100%);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 30px;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .card:hover {
-        border-color: var(--accent);
-        transform: translateY(-8px);
-    }
-
-    .card:hover::before {
-        opacity: 1;
-    }
-
-    .card-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    .card h4 {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
-        color: var(--accent);
-        font-weight: 600;
-    }
-
-    .card p {
-        color: var(--text-secondary);
-        font-size: 0.95rem;
-        line-height: 1.7;
-    }
-
-    /* Problem & Solution section */
-    .problem-box {
-        background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
-        border-left: 4px solid var(--accent-warm);
-        padding: 30px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-
-    .solution-box {
-        background: linear-gradient(135deg, rgba(0, 200, 83, 0.1) 0%, rgba(0, 200, 83, 0.05) 100%);
-        border-left: 4px solid var(--success);
-        padding: 30px;
-        border-radius: 8px;
-        margin-bottom: 30px;
-    }
-
-    .solution-box h4 {
-        color: var(--success);
-        margin-bottom: 15px;
-        font-size: 1.1rem;
-    }
-
-    .feature-list {
-        list-style: none;
-        margin-top: 20px;
-    }
-
-    .feature-list li {
-        padding: 12px 0;
-        padding-left: 30px;
-        position: relative;
-        color: var(--text-secondary);
-    }
-
-    .feature-list li::before {
-        content: '→';
-        position: absolute;
-        left: 0;
-        color: var(--accent);
-        font-weight: bold;
-    }
-
-    /* Comparison table */
-    .comparison-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 30px;
-        font-size: 0.95rem;
-    }
-
-    .comparison-table th {
-        background: rgba(0, 212, 255, 0.1);
-        border: 1px solid var(--border);
-        padding: 15px;
-        text-align: left;
-        font-weight: 600;
-        color: var(--accent);
-    }
-
-    .comparison-table td {
-        border: 1px solid var(--border);
-        padding: 15px;
-        color: var(--text-secondary);
-    }
-
-    .comparison-table tr:hover {
-        background: rgba(0, 212, 255, 0.05);
-    }
-
-    .check {
-        color: var(--success);
-        font-weight: bold;
-    }
-
-    .cross {
-        color: var(--accent-warm);
-    }
-
-    /* Alternative proposals */
-    .alternative {
-        background: linear-gradient(135deg, var(--secondary) 0%, rgba(26, 31, 58, 0.5) 100%);
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        padding: 35px;
-        margin-bottom: 25px;
-        transition: all 0.3s ease;
-    }
-
-    .alternative:hover {
-        border-color: var(--accent);
-        box-shadow: 0 20px 40px rgba(0, 212, 255, 0.1);
-    }
-
-    .alternative h4 {
-        font-size: 1.3rem;
-        color: var(--accent);
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .alt-tag {
-        display: inline-block;
-        background: rgba(0, 212, 255, 0.2);
-        color: var(--accent);
-        padding: 4px 12px;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    .alt-pros, .alt-cons {
-        margin-top: 15px;
-    }
-
-    .alt-pros h5, .alt-cons h5 {
-        color: var(--text-primary);
-        font-size: 0.95rem;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .alt-pros h5 {
-        color: var(--success);
-    }
-
-    .alt-cons h5 {
-        color: var(--accent-warm);
-    }
-
-    /* Timeline/Next Steps */
-    .timeline {
-        margin-top: 40px;
-    }
-
-    .timeline-item {
-        display: flex;
-        gap: 30px;
-        margin-bottom: 40px;
-        position: relative;
-    }
-
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        left: 39px;
-        top: 60px;
-        width: 2px;
-        height: 40px;
-        background: var(--border);
-    }
-
-    .timeline-item:last-child::before {
-        display: none;
-    }
-
-    .timeline-dot {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, var(--accent), var(--accent-warm));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: var(--primary);
-        flex-shrink: 0;
-        font-size: 1.1rem;
-    }
-
-    .timeline-content h4 {
-        font-size: 1.2rem;
-        margin-bottom: 8px;
-        color: var(--accent);
-    }
-
-    .timeline-content p {
-        color: var(--text-secondary);
-        margin-bottom: 8px;
-    }
-
-    /* Footer */
-    footer {
-        padding: 60px 0;
-        border-top: 1px solid var(--border);
-        text-align: center;
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .container {
-            padding: 0 20px;
-        }
-
-        .header-content h1 {
-            font-size: 2.5rem;
-        }
-
-        .grid-2, .grid-3 {
-            grid-template-columns: 1fr;
-        }
-
-        h2 {
-            font-size: 2rem;
-        }
-
-        section {
-            padding: 50px 0;
-        }
-
-        .timeline-item {
-            gap: 20px;
-        }
-
-        .timeline-dot {
-            width: 60px;
-            height: 60px;
-            font-size: 0.9rem;
-        }
-    }
-
-    /* Print styles */
-    @media print {
-        body::before {
-            display: none;
-        }
-
-        .container {
-            max-width: 100%;
-        }
-    }
-</style>
-```
-
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <span class="badge">PROPUESTA DE PRODUCTO</span>
-                <h1>Robot Companion</h1>
-                <p>Puente digital entre la documentación de ingeniería y el operador en piso. Centraliza información de mantenimiento, auditoría y soporte para flota multi-marca de robots industriales.</p>
-            </div>
-        </header>
-
-```
-    <section id="vision">
-        <h2>La Visión</h2>
-        <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; margin-bottom: 30px;">
-            Los integradores que venden múltiples marcas de robots enfrentan un problema que nadie resuelve: después de la venta, el operador en piso no tiene acceso simple a documentación, procedimientos de troubleshooting, ni forma rápida de reportar problemas.
-        </p>
-        <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 800px;">
-            Robot Companion <strong>conecta</strong> el MOC (sistema de mantenimiento existente) con el operador mediante un acceso simple, rápido y multi-marca.
-        </p>
-    </section>
-
-    <section id="problema">
-        <h2>El Problema</h2>
-        <div class="grid-2">
-            <div>
-                <h3>Hoy: El operador se queda sin herramientas</h3>
-                <div class="problem-box">
-                    <p><strong>Cuando aparece una alarma a las 3 AM:</strong></p>
-                    <ul class="feature-list">
-                        <li>¿Busca en carpetas compartidas?</li>
-                        <li>¿Llama al integrador?</li>
-                        <li>¿Espera al ingeniero?</li>
-                        <li>¿Improvisa?</li>
-                    </ul>
-                </div>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;">
-                    El conocimiento existe, pero está en silos: documentación del fabricante, notas del integrador, manual de seguridad, historial de mantenimiento—todo desconectado.
-                </p>
-            </div>
-            <div>
-                <h3>Los dolores específicos</h3>
-                <div class="problem-box" style="border-left-color: var(--accent-warm);">
-                    <p><strong>Integrador multi-marca:</strong> 15 robots de 5 fabricantes diferentes. Sin forma unificada de acceder a documentación.</p>
-                </div>
-                <div class="problem-box" style="border-left-color: var(--accent-warm);">
-                    <p><strong>Auditoría/Compliance:</strong> ¿Cuándo se hizo el último mantenimiento? ¿Quién? ¿Qué se encontró?</p>
-                </div>
-                <div class="problem-box" style="border-left-color: var(--accent-warm);">
-                    <p><strong>Soporte:</strong> Operador no reporta problemas porque no hay canal claro.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="solucion">
-        <h2>Solución: Robot Companion</h2>
-        <h3>¿Cómo funciona?</h3>
-        
-        <div class="grid-2" style="margin-top: 40px;">
-            <div class="card">
-                <div class="card-content">
-                    <h4>1. Etiqueta en cada robot</h4>
-                    <p>Cada robot tiene un QR único (o RFID en futuro). Impreso, adhesivo, durable. Costo: $0.50-2 por unidad.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>2. App móvil</h4>
-                    <p>Operador escanea → accede a toda la información. Funciona con WiFi o sin conexión (modo offline).</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>3. Panel web</h4>
-                    <p>Integrador y operador ven historial completo, auditorías, work orders, documentación centralizada.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>4. Integración con MOC</h4>
-                    <p>Se conecta con el sistema de mantenimiento existente. No reemplaza, complementa.</p>
-                </div>
-            </div>
-        </div>
-
-        <h3 style="margin-top: 60px;">Qué puede hacer el operador</h3>
-        <div class="solution-box">
-            <ul class="feature-list" style="list-style: none; padding: 0;">
-                <li>✓ Ver documentación (manual, parámetros, límites de seguridad)</li>
-                <li>✓ Ver alarmas activas e historial de errores</li>
-                <li>✓ Hacer checklist de pre-arranque</li>
-                <li>✓ Registrar auditorías (fotos, notas, firma)</li>
-                <li>✓ Reportar problemas (tienda en app, envía a integrador)</li>
-                <li>✓ Ver últimas acciones de mantenimiento</li>
-                <li>✓ (Futuro) Control remoto básico del robot</li>
-                <li>✓ (Futuro) Copilot IA para troubleshooting</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="alternativas">
-        <h2>Propuestas & Alternativas</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 40px;">Cuatro formas de llevar esta idea al mercado, cada una con trade-offs distintos:</p>
-
-        <div class="alternative">
-            <h4>
-                <span class="alt-tag">Opción A</span>
-                QR + App Standalone (MVP Puro)
-            </h4>
-            <p style="color: var(--text-secondary); margin-top: 12px;">App móvil simple. Escanea QR → accede a documentación estática y formularios. No integración con MOC.</p>
-            
-            <div class="alt-pros">
-                <h5>✓ Ventajas</h5>
-                <ul class="feature-list">
-                    <li>Rápido de desarrollar (4-8 semanas)</li>
-                    <li>Costo bajo ($30-50K desarrollo inicial)</li>
-                    <li>Fácil de adoptar (solo smartphone)</li>
-                    <li>No requiere integración compleja</li>
-                    <li>El integrador controla el contenido</li>
-                </ul>
-            </div>
-            
-            <div class="alt-cons">
-                <h5>✗ Limitaciones</h5>
-                <ul class="feature-list">
-                    <li>No conecta con historial de mantenimiento existente</li>
-                    <li>Datos duplicados (copia manual de documentación)</li>
-                    <li>No es fuente única de verdad</li>
-                    <li>Sin analítica de uso/tendencias</li>
-                </ul>
-            </div>
-            
-            <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.95rem;">
-                <strong>Ideal para:</strong> Piloto rápido. Probar con integrador pequeño (5-10 robots) antes de comprometerse.
-            </p>
-        </div>
-
-        <div class="alternative">
-            <h4>
-                <span class="alt-tag">Opción B</span>
-                QR + App + API Integration (Recomendado)
-            </h4>
-            <p style="color: var(--text-secondary); margin-top: 12px;">App como Opción A, pero con APIs que se conectan al MOC/CMMS del cliente (Oxmaint, SAP, etc.).</p>
-            
-            <div class="alt-pros">
-                <h5>✓ Ventajas</h5>
-                <ul class="feature-list">
-                    <li>Conecta con realidad operativa (historial vivo)</li>
-                    <li>Fuente única de verdad</li>
-                    <li>Escalable a múltiples integradores</li>
-                    <li>Datos para analítica/predictivo</li>
-                    <li>Modelo de suscripción viable</li>
-                </ul>
-            </div>
-            
-            <div class="alt-cons">
-                <h5>✗ Limitaciones</h5>
-                <ul class="feature-list">
-                    <li>Desarrollo más largo (12-16 semanas)</li>
-                    <li>Costo inicial mayor ($80-120K)</li>
-                    <li>Requiere integración API (cada cliente puede ser diferente)</li>
-                    <li>Soporte post-venta más complejo</li>
-                </ul>
-            </div>
-            
-            <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.95rem;">
-                <strong>Ideal para:</strong> Scalability. Modelo B2B viable. Precio: $200-500/mes por integrador.
-            </p>
-        </div>
-
-        <div class="alternative">
-            <h4>
-                <span class="alt-tag">Opción C</span>
-                RFID + Control Remoto (Premium)
-            </h4>
-            <p style="color: var(--text-secondary); margin-top: 12px;">Evolución. RFID en lugar de QR (lectura automática sin línea de vista). Incluye capacidad de control remoto básico del robot.</p>
-            
-            <div class="alt-pros">
-                <h5>✓ Ventajas</h5>
-                <ul class="feature-list">
-                    <li>Diferenciador claro vs competencia</li>
-                    <li>Datos más ricos (automáticos, no manuales)</li>
-                    <li>Caso de uso remoto (soporte desde lejos)</li>
-                    <li>Premium pricing justificado</li>
-                </ul>
-            </div>
-            
-            <div class="alt-cons">
-                <h5>✗ Limitaciones</h5>
-                <ul class="feature-list">
-                    <li>Desarrollo técnico más complejo (control de robots)</li>
-                    <li>Hardware RFID (lectores, etiquetas, instalación)</li>
-                    <li>Costo total: $300-500K+ (infraestructura)</li>
-                    <li>Ciclo de venta mucho más largo</li>
-                    <li>Complejidad de seguridad (control remoto = riesgo)</li>
-                </ul>
-            </div>
-            
-            <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.95rem;">
-                <strong>Ideal para:</strong> Fase 2 o 3. Después de validar Opción B.
-            </p>
-        </div>
-
-        <div class="alternative">
-            <h4>
-                <span class="alt-tag">Opción D</span>
-                White-Label para OEM (Largo plazo)
-            </h4>
-            <p style="color: var(--text-secondary); margin-top: 12px;">Vender la plataforma como servicio a los fabricantes de robots (FANUC, ABB, KUKA). Ellos lo branded para sus clientes.</p>
-            
-            <div class="alt-pros">
-                <h5>✓ Ventajas</h5>
-                <ul class="feature-list">
-                    <li>Escala masiva (miles de robots)</li>
-                    <li>Ingresos recurrentes alto volumen</li>
-                    <li>Integración nativa con los robots</li>
-                    <li>Posición estratégica en la cadena</li>
-                </ul>
-            </div>
-            
-            <div class="alt-cons">
-                <h5>✗ Limitaciones</h5>
-                <ul class="feature-list">
-                    <li>Acceso a OEMs muy difícil sin traction primero</li>
-                    <li>Ciclos de venta de 12-24 meses</li>
-                    <li>Dependencia de OEM para adopción</li>
-                    <li>Requiere muy buen producto ya validado</li>
-                </ul>
-            </div>
-            
-            <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); color: var(--text-secondary); font-size: 0.95rem;">
-                <strong>Ideal para:</strong> Objetivo de 3-5 años. No es salida inicial.
-            </p>
-        </div>
-    </section>
-
-    <section id="comparativa">
-        <h2>Comparativa: ¿Cuál elegir?</h2>
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Criterio</th>
-                    <th>Opción A (MVP)</th>
-                    <th>Opción B (Recom.)</th>
-                    <th>Opción C (Premium)</th>
-                    <th>Opción D (OEM)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Tiempo de desarrollo</strong></td>
-                    <td><span class="check">4-8 sem</span></td>
-                    <td>12-16 sem</td>
-                    <td>20-24 sem</td>
-                    <td>24+ sem</td>
-                </tr>
-                <tr>
-                    <td><strong>Costo inicial</strong></td>
-                    <td><span class="check">$30-50K</span></td>
-                    <td>$80-120K</td>
-                    <td>$300-500K</td>
-                    <td>$500K+</td>
-                </tr>
-                <tr>
-                    <td><strong>Integración con MOC</strong></td>
-                    <td><span class="cross">No</span></td>
-                    <td><span class="check">Sí</span></td>
-                    <td><span class="check">Sí</span></td>
-                    <td><span class="check">Sí</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Hardware especial</strong></td>
-                    <td><span class="check">No</span></td>
-                    <td><span class="check">No</span></td>
-                    <td>Sí (RFID)</td>
-                    <td>Según OEM</td>
-                </tr>
-                <tr>
-                    <td><strong>Facilidad adopción</strong></td>
-                    <td><span class="check">Alta</span></td>
-                    <td><span class="check">Alta</span></td>
-                    <td>Media</td>
-                    <td>Depende OEM</td>
-                </tr>
-                <tr>
-                    <td><strong>Modelo de ingresos</strong></td>
-                    <td>Licencia única</td>
-                    <td><span class="check">SaaS recurrente</span></td>
-                    <td>SaaS + hardware</td>
-                    <td>Revenue share</td>
-                </tr>
-                <tr>
-                    <td><strong>Validación de mercado</strong></td>
-                    <td><span class="check">Sí</span></td>
-                    <td><span class="check">Sí</span></td>
-                    <td>Parcial</td>
-                    <td><span class="cross">No</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section id="recomendacion">
-        <h2>Recomendación</h2>
-        <h3>Camino de 3 fases:</h3>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-dot">1</div>
-                <div class="timeline-content">
-                    <h4>Fase 1: MVP (Opción A) - Piloto rápido</h4>
-                    <p><strong>Duración:</strong> 3 meses | <strong>Inversión:</strong> $40K</p>
-                    <p><strong>Con tu cuñado:</strong> Implementar en su operación. 15 robots, QR + app. Validar que el dolor es real y que la solución lo resuelve.</p>
-                    <p><strong>Resultado:</strong> Case study. Evidencia de que funciona. Datos de uso real.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot">2</div>
-                <div class="timeline-content">
-                    <h4>Fase 2: Escalabilidad (Opción B) - Producto productivo</h4>
-                    <p><strong>Duración:</strong> 4 meses después | <strong>Inversión:</strong> $100K adicionales</p>
-                    <p><strong>Con integradores:</strong> Ir a mercado con API. Vender a otros integradores. Modelo SaaS ($300/mes por operador o $500/mes por integrador).</p>
-                    <p><strong>Resultado:</strong> 5-10 integradores piloto. Ingresos mensuales. Validación B2B.</p>
-                </div>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-dot">3</div>
-                <div class="timeline-content">
-                    <h4>Fase 3: Expansión (Opción C o D) - Premium</h4>
-                    <p><strong>Duración:</strong> 6-12 meses después | <strong>Decisión:</strong> RFID o White-label</p>
-                    <p><strong>Basado en:</strong> Feedback de Fase 2. Si piden control remoto → Opción C. Si OEMs preguntan → Opción D.</p>
-                    <p><strong>Resultado:</strong> Escalada seria a mercado masivo o partnership estratégico.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="proximos-pasos">
-        <h2>Próximos Pasos Concretos</h2>
-        <h3>Esta semana:</h3>
-        <div class="solution-box">
-            <ul class="feature-list">
-                <li>Hablar con tu cuñado: <strong>"¿Cuándo un operador necesita información, qué le falta hoy?"</strong></li>
-                <li>Mapear sus 15 robots: marcas, antigüedad, dónde están las grietas</li>
-                <li>Ver su sistema actual de mantenimiento (¿usa CMMS?, ¿Excel?, ¿nada?)</li>
-                <li>Estimar: si implementamos esto, ¿cuánto downtime evitamos? ¿Cuánto cuesta?</li>
-            </ul>
-        </div>
-
-        <h3>En 2 semanas:</h3>
-        <div class="solution-box">
-            <ul class="feature-list">
-                <li>Prototipo visual (wireframes/mockup de la app)</li>
-                <li>Decidir: ¿A dónde va primero? MVP simple o API desde el inicio</li>
-                <li>Tech stack: qué tecnología. Recomendación: React (app) + Node.js (backend) + PostgreSQL</li>
-            </ul>
-        </div>
-
-        <h3>En 1 mes:</h3>
-        <div class="solution-box">
-            <ul class="feature-list">
-                <li>Primer sprint de desarrollo (Opción A)</li>
-                <li>QR generados e impresos para prueba</li>
-                <li>App básica funcional (escanear → datos)</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="preguntas-clave">
-        <h2>Las Preguntas Clave a Responder</h2>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-content">
-                    <h4>Mercado</h4>
-                    <p>¿Cuántos integradores en tu mercado venden multi-marca? ¿Qué tamaño tienen? ¿Cuánto gastarían en esto?</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>Dolor real</h4>
-                    <p>¿Es downtime? ¿Es auditoría? ¿Es capacitación? ¿Cuál duele más? ¿Cuánto cuesta no resolverlo?</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>Tecnología existente</h4>
-                    <p>¿Qué MOC/CMMS usan los integradores? ¿ERP? ¿Cómo obtienen hoy la documentación de robots?</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h4>Ventaja competitiva</h4>
-                    <p>¿Qué hace esto diferente de que el operador simplemente busque en Google Drive?</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>Robot Companion — Documento de concepto | Creado en Mayo 2026</p>
-        <p style="margin-top: 10px; color: var(--text-secondary); font-size: 0.85rem;">Este documento es confidencial y solo para discusión interna.</p>
-    </footer>
-</div>
-```
-
-</body>
-</html>
+# Robot Companion
+
+## Puente digital entre ingeniería y operación
+
+**PROPUESTA DE PRODUCTO**
+
+Centraliza información de mantenimiento, auditoría y soporte para flota multi-marca de robots industriales.
+
+-----
+
+## La Visión
+
+Los integradores que venden múltiples marcas de robots enfrentan un problema que nadie resuelve: **después de la venta, el operador en piso no tiene acceso simple a documentación, procedimientos de troubleshooting, ni forma rápida de reportar problemas.**
+
+Robot Companion **conecta** el MOC (sistema de mantenimiento existente) con el operador mediante un acceso simple, rápido y multi-marca.
+
+-----
+
+## El Problema
+
+### Hoy: El operador se queda sin herramientas
+
+Cuando aparece una alarma a las 3 AM:
+
+- ¿Busca en carpetas compartidas?
+- ¿Llama al integrador?
+- ¿Espera al ingeniero?
+- ¿Improvisa?
+
+El conocimiento existe, pero está en silos: documentación del fabricante, notas del integrador, manual de seguridad, historial de mantenimiento—**todo desconectado.**
+
+### Los dolores específicos
+
+**Integrador multi-marca:**
+15 robots de 5 fabricantes diferentes. Sin forma unificada de acceder a documentación.
+
+**Auditoría/Compliance:**
+¿Cuándo se hizo el último mantenimiento? ¿Quién? ¿Qué se encontró?
+
+**Soporte:**
+Operador no reporta problemas porque no hay canal claro.
+
+-----
+
+## Solución: Robot Companion
+
+### ¿Cómo funciona?
+
+#### 1. Etiqueta en cada robot
+
+Cada robot tiene un QR único (o RFID en futuro). Impreso, adhesivo, durable.
+**Costo:** $0.50-2 por unidad.
+
+#### 2. App móvil
+
+Operador escanea → accede a toda la información. Funciona con WiFi o sin conexión (modo offline).
+
+#### 3. Panel web
+
+Integrador y operador ven historial completo, auditorías, work orders, documentación centralizada.
+
+#### 4. Integración con MOC
+
+Se conecta con el sistema de mantenimiento existente. No reemplaza, complementa.
+
+### Qué puede hacer el operador
+
+✓ Ver documentación (manual, parámetros, límites de seguridad)
+✓ Ver alarmas activas e historial de errores
+✓ Hacer checklist de pre-arranque
+✓ Registrar auditorías (fotos, notas, firma)
+✓ Reportar problemas (tienda en app, envía a integrador)
+✓ Ver últimas acciones de mantenimiento
+✓ **(Futuro)** Controlar el robot remotamente
+✓ **(Futuro)** Copilot IA para troubleshooting
+
+-----
+
+## Propuestas & Alternativas
+
+Cuatro formas de llevar esta idea al mercado, cada una con trade-offs distintos.
+
+### Opción A: QR + App Standalone (MVP Puro)
+
+App móvil simple. Escanea QR → accede a documentación estática y formularios. **No integración con MOC.**
+
+#### ✓ Ventajas
+
+- Rápido de desarrollar (4-8 semanas)
+- Costo bajo ($30-50K desarrollo inicial)
+- Fácil de adoptar (solo smartphone)
+- No requiere integración compleja
+- El integrador controla el contenido
+
+#### ✗ Limitaciones
+
+- No conecta con historial de mantenimiento existente
+- Datos duplicados (copia manual de documentación)
+- No es fuente única de verdad
+- Sin analítica de uso/tendencias
+
+#### 🎯 Ideal para
+
+Piloto rápido. Probar con integrador pequeño (5-10 robots) antes de comprometerse.
+
+-----
+
+### Opción B: QR + App + API Integration (RECOMENDADO)
+
+App como Opción A, pero con APIs que se conectan al MOC/CMMS del cliente (Oxmaint, SAP, etc.).
+
+#### ✓ Ventajas
+
+- Conecta con realidad operativa (historial vivo)
+- Fuente única de verdad
+- Escalable a múltiples integradores
+- Datos para analítica/predictivo
+- **Modelo de suscripción viable**
+
+#### ✗ Limitaciones
+
+- Desarrollo más largo (12-16 semanas)
+- Costo inicial mayor ($80-120K)
+- Requiere integración API (cada cliente puede ser diferente)
+- Soporte post-venta más complejo
+
+#### 🎯 Ideal para
+
+Scalability. Modelo B2B viable.
+**Precio:** $200-500/mes por integrador.
+
+-----
+
+### Opción C: RFID + Control Remoto (Premium)
+
+Evolución. RFID en lugar de QR (lectura automática sin línea de vista). Incluye capacidad de control remoto básico del robot.
+
+#### ✓ Ventajas
+
+- Diferenciador claro vs competencia
+- Datos más ricos (automáticos, no manuales)
+- Caso de uso remoto (soporte desde lejos)
+- Premium pricing justificado
+
+#### ✗ Limitaciones
+
+- Desarrollo técnico más complejo (control de robots)
+- Hardware RFID (lectores, etiquetas, instalación)
+- Costo total: $300-500K+ (infraestructura)
+- Ciclo de venta mucho más largo
+- Complejidad de seguridad (control remoto = riesgo)
+
+#### 🎯 Ideal para
+
+Fase 2 o 3. Después de validar Opción B.
+
+-----
+
+### Opción D: White-Label para OEM (Largo plazo)
+
+Vender la plataforma como servicio a los fabricantes de robots (FANUC, ABB, KUKA). Ellos lo branded para sus clientes.
+
+#### ✓ Ventajas
+
+- Escala masiva (miles de robots)
+- Ingresos recurrentes alto volumen
+- Integración nativa con los robots
+- Posición estratégica en la cadena
+
+#### ✗ Limitaciones
+
+- Acceso a OEMs muy difícil sin traction primero
+- Ciclos de venta de 12-24 meses
+- Dependencia de OEM para adopción
+- Requiere muy buen producto ya validado
+
+#### 🎯 Ideal para
+
+Objetivo de 3-5 años. No es salida inicial.
+
+-----
+
+## Comparativa: ¿Cuál elegir?
+
+|Criterio                 |Opción A (MVP)|Opción B (Recom.)|Opción C (Premium)|Opción D (OEM)|
+|-------------------------|--------------|-----------------|------------------|--------------|
+|**Tiempo de desarrollo** |⚡ 4-8 sem     |12-16 sem        |20-24 sem         |24+ sem       |
+|**Costo inicial**        |💰 $30-50K     |$80-120K         |$300-500K         |$500K+        |
+|**Integración con MOC**  |❌ No          |✅ Sí             |✅ Sí              |✅ Sí          |
+|**Hardware especial**    |✅ No          |✅ No             |RFID              |Según OEM     |
+|**Facilidad adopción**   |✅ Alta        |✅ Alta           |Media             |Depende OEM   |
+|**Modelo de ingresos**   |Licencia única|💵 SaaS recurrente|SaaS + hardware   |Revenue share |
+|**Validación de mercado**|✅ Sí          |✅ Sí             |Parcial           |❌ No          |
+
+-----
+
+## Recomendación: Camino de 3 Fases
+
+### Fase 1: MVP (Opción A) - Piloto rápido
+
+**Duración:** 3 meses  
+**Inversión:** $40K  
+**Scope:** Con tu cuñado - implementar en su operación. 15 robots, QR + app.
+
+**Objetivo:**
+
+- Validar que el dolor es real
+- Validar que la solución lo resuelve
+- Generar case study
+- Obtener evidencia de que funciona
+- Datos de uso real
+
+**Resultado esperado:**
+Un piloto completamente funcional y documentado.
+
+-----
+
+### Fase 2: Escalabilidad (Opción B) - Producto productivo
+
+**Duración:** 4 meses después  
+**Inversión:** $100K adicionales  
+**Scope:** Ir a mercado con API. Vender a otros integradores.
+
+**Objetivo:**
+
+- Agregar integración con MOC/CMMS
+- Versión productiva lista para múltiples clientes
+- Modelo SaaS ($300/mes por operador o $500/mes por integrador)
+- 5-10 integradores piloto
+
+**Resultado esperado:**
+Ingresos mensuales. Validación B2B. Feedback para refinar.
+
+-----
+
+### Fase 3: Expansión (Opción C o D) - Premium
+
+**Duración:** 6-12 meses después  
+**Decisión:** RFID o White-label
+
+**Basado en:**
+
+- Feedback de Fase 2
+- Si piden control remoto → Opción C
+- Si OEMs preguntan → Opción D
+
+**Resultado esperado:**
+Escalada seria a mercado masivo o partnership estratégico.
+
+-----
+
+## Próximos Pasos Concretos
+
+### Esta semana
+
+1. **Hablar con tu cuñado:**
+- “¿Cuándo un operador necesita información, qué le falta hoy?”
+- “¿Qué pasa cuando hay downtime?”
+- “¿Cuánto cuesta ese downtime?”
+1. **Mapear sus 15 robots:**
+- Marcas, antigüedad, dónde están las grietas
+- Cuáles tienen problemas recurrentes
+1. **Ver su sistema actual de mantenimiento:**
+- ¿Usa CMMS?, ¿Excel?, ¿nada?
+- ¿Quién accede? ¿Cómo?
+1. **Estimar el impacto:**
+- Si implementamos esto, ¿cuánto downtime evitamos?
+- ¿Cuánto cuesta no resolverlo?
+
+### En 2 semanas
+
+1. Prototipo visual (wireframes/mockup de la app)
+1. Decidir: ¿A dónde va primero? MVP simple o API desde el inicio
+1. Tech stack: qué tecnología
+- **Recomendación:** React (app) + Node.js (backend) + PostgreSQL
+
+### En 1 mes
+
+1. Primer sprint de desarrollo (Opción A)
+1. QR generados e impresos para prueba
+1. App básica funcional (escanear → datos)
+
+-----
+
+## Las Preguntas Clave a Responder
+
+### Mercado
+
+¿Cuántos integradores en tu mercado venden multi-marca?  
+¿Qué tamaño tienen?  
+¿Cuánto gastarían en esto?
+
+### Dolor real
+
+¿Es downtime? ¿Es auditoría? ¿Es capacitación?  
+¿Cuál duele más?  
+¿Cuánto cuesta no resolverlo?
+
+### Tecnología existente
+
+¿Qué MOC/CMMS usan los integradores?  
+¿ERP?  
+¿Cómo obtienen hoy la documentación de robots?
+
+### Ventaja competitiva
+
+¿Qué hace esto diferente de que el operador simplemente busque en Google Drive?  
+¿Por qué pagarían?
+
+-----
+
+## Modelo de Negocio (Fase 2)
+
+### Opción B - Pricing (Recomendado)
+
+#### Por Integrador
+
+- **$500/mes** por integrador (hasta 5 robots)
+- **$1,000/mes** por integrador (5-20 robots)
+- **Custom** (20+ robots)
+
+#### Por Operador
+
+- **$200/mes** por operador (acceso individual)
+- Mínimo 3 operadores por integrador
+
+### Ingresos proyectados (Año 2)
+
+|Escenario  |Clientes       |Precio promedio|Ingreso anual|
+|-----------|---------------|---------------|-------------|
+|Conservador|10 integradores|$600/mes       |$72,000      |
+|Realista   |25 integradores|$700/mes       |$210,000     |
+|Optimista  |50 integradores|$800/mes       |$480,000     |
+
+*(Estos son números conservadores. Depende de tu capacidad de venta.)*
+
+-----
+
+## Riesgos & Mitigación
+
+### Riesgo: Adopción lenta
+
+**Mitigación:** Empezar con integrador donde conoces al decision maker (tu cuñado).
+
+### Riesgo: Integración compleja con MOC
+
+**Mitigación:** Opción A no requiere integración. API es Fase 2.
+
+### Riesgo: Múltiples marcas de robots = múltiples APIs
+
+**Mitigación:** Empezar con 2-3 marcas. Expandir según demanda.
+
+### Riesgo: Competencia de OEM
+
+**Mitigación:** Tú eres agnóstico de marca. OEMs están bloqueados en su ecosistema.
+
+### Riesgo: Seguridad (control remoto futuro)
+
+**Mitigación:** Esto es Fase 3. Primero validas sin control remoto.
+
+-----
+
+## Próximas conversaciones
+
+### Con tu cuñado
+
+- ¿Cuál de las 4 opciones le suena más viable?
+- ¿Cuántos integradores conoce? ¿Hablaría con uno?
+- ¿Cuánto pagaría por una solución así?
+
+### Con posibles inversores
+
+- “¿Por qué esto es una idea?” (El problema real + mercado)
+- “¿Cuál es la salida?” (Fase 3: RFID, White-label, o vender)
+- “¿Cuándo empieza a generar ingresos?” (Fase 2, mes 7-8)
+
+-----
+
+## Conclusión
+
+Robot Companion soluciona un problema específico que hoy es manual, tedioso y propenso a errores: **conectar la documentación de ingeniería con el operador en piso.**
+
+No es sexy. No es IA. No es sexy. Pero duele. Y alguien lo va a vender.
+
+**La pregunta es: ¿por qué no vos?**
+
+-----
+
+**Documento confidencial | Concepto de producto | Mayo 2026**
